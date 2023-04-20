@@ -20,23 +20,20 @@ def create_app():
     login_manager.init_app(app)
 
 
-
-
     from .auth import auth
     from .courses import courses
+    from .courses_web import courses_web
+    from .misc_web import misc_web
     
-    
-    #app.register_blueprint(home,url_prefix='/')
     app.register_blueprint(auth,url_prefix='/')
     app.register_blueprint(courses,url_prefix='/')
-
+    app.register_blueprint(courses_web,url_prefix='/')
+    app.register_blueprint(misc_web,url_prefix='/')
+    
     @login_manager.user_loader
     def user_loader(user_id): 
         return User.query.get(user_id)
   
-
- 
-
     return app
 
    

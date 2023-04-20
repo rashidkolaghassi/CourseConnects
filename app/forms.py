@@ -36,3 +36,15 @@ class CreateAccountForm(FlaskForm):
     password = PasswordField('Password',
                              id='pwd_create',
                              validators=[DataRequired()])
+
+
+class AddCoursesForm(FlaskForm):
+    course_name = StringField('Course Name',
+                         id='coursename_create',
+                         validators=[DataRequired()])
+    semester = StringField('Semester',
+                         id='semester_create',
+                         validators=[DataRequired()])
+    status = StringField('Status',
+                         id='status_create',
+                         validators=[DataRequired()])

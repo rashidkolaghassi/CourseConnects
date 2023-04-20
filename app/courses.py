@@ -1,10 +1,20 @@
 from .models import User, Course, User_Courses, db
+from .forms import AddCoursesForm
 
 # Third-party libraries
-from flask import Flask, redirect, request, url_for,Blueprint,jsonify
+from flask import Flask, redirect, request, url_for,Blueprint,jsonify,render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, current_user, login_user, logout_user, login_required, LoginManager
 from sqlalchemy.orm import load_only
+import requests
+
+from .courses_functions import addCourses, getCourses, deleteCourses
+
+
+# IP address of APP change as needed
+BASE = "http://192.168.1.6:8000/"
+
+
 
 courses = Blueprint('courses',__name__)
 
@@ -17,49 +27,22 @@ def course():
     if request.method == 'POST':
 
         course_names= request.json.get('course_names')
-        semesters_ = request.json.get('semester')
-        availability_ = request.json.get('availability')
+        semesters_ = request.json.get('semesters')
+        status_ = request.json.get('status')
 
-        if len(semesters_)!=len(course_names):
-            return jsonify({'ERROR':'courses and semesters dont line up'})
-        for e in range(len(course_names)):
-            #check if course is already in courses table:
-            courseCheck = Course.query.filter_by(course_name=course_names[e],semester=semesters_[e]).first()
-            if courseCheck is None:
-                course_=Course(course_name=course_names[e],semester=semesters_[e])
-                db.session.add(course_)
-                db.session.commit()
-                courseCheck = Course.query.filter_by(course_name=course_names[e],semester=semesters_[e]).first()
+        response = addCourses(course_names,semesters_,status_)
 
-            
-            course_=User_Courses(user_id=current_user.id,course_id=courseCheck.course_id, availability = availability_[e] )
-            db.session.add(course_)
-            db.session.commit()
+        return response
         
-        return jsonify({'message':'Sucessfully added courses'})
 
     elif request.method == 'GET':
-        courses = Course.query.join(User_Courses).filter_by(user_id=current_user.id).all()
-    
-        return jsonify({'courses': [{'id': course.course_name, 'semester': course.semester} for course in courses]})
+        return getCourses()
         
     elif request.method == 'DELETE':
         course_names= request.json.get('course_names')
-        semesters_ = request.json.get('semester')
-        if len(semesters_)!=len(course_names):
-            return jsonify({'ERROR':'courses and semesters dont line up'})
-        
-        for e in range(len(course_names)):
-
-            course_= User_Courses.query.filter_by(user_id=current_user.id).join(Course).filter_by(course_name=course_names[e],semester = semesters_[e]).first()
-            
-            if course_ is not None:
-                db.session.delete(course_)
-                db.session.commit()
-            else:
-                return {"message":"invalid course name entered"}
-            
-        return {"message":"successfuly deleted course"}
+        semesters_ = request.json.get('semesters')
+        return deleteCourses(course_names, semesters_)
+      
     
 
 @courses.route('/api/findclassmates',methods=['GET'])
@@ -71,8 +54,8 @@ def find_classmates():
     for e in range(len(course_names)):
         course= Course.query.filter_by(course_name=course_names[e],semester=semester_[e]).first()
         course_id=course.course_id
-        users= User.query.join(User_Courses).filter(User_Courses.course_id == course_id, User.id != current_user.id).with_entities(User.first_name, User.last_name,User_Courses.availability).all()
-        classmates_[course_names[e]]=[f'{user.first_name} {user.last_name} {user.availability}' for user in users]
+        users= User.query.join(User_Courses).filter(User_Courses.course_id == course_id, User.id != current_user.id).with_entities(User.first_name, User.last_name,User_Courses.status).all()
+        classmates_[course_names[e]]=[f'{user.first_name} {user.last_name} {user.status}' for user in users]
 
     return jsonify(classmates_)
     
@@ -81,12 +64,4 @@ def find_classmates():
 # @login_required
 # def addfriends():
 
-
-
-
-
-
-                
-          
-    
 

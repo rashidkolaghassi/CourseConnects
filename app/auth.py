@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, current_user, login_user, logout_user, login_required, LoginManager
 import requests
 from .forms import LoginForm, CreateAccountForm
+import json
 
 from flask_login import (
     LoginManager,
@@ -14,11 +15,12 @@ from flask_login import (
 )
 
 # Internal imports
-#from db import init_db_command
 from .models import User, Course, db
+#sesh = requests.Session()
 
-auth= Blueprint('auth',__name__)
-BASE = "http://192.168.1.221:8000"
+auth = Blueprint('auth',__name__)
+BASE = "http://192.168.1.6:8000"
+
 
 @auth.route('/', methods=['GET'])
 def home():
@@ -27,6 +29,7 @@ def home():
         return render_template("home/index.html")
     else:
         return redirect(url_for('auth.login_web'))
+
 
 @auth.route('/api/register', methods=['POST'])
 def register():
@@ -44,6 +47,7 @@ def register():
     db.session.add(user)
     db.session.commit()
     return jsonify({'message': 'User created.'})
+
 
 @auth.route('/api/login', methods=['POST'])
 def login():
@@ -71,20 +75,6 @@ def logout():
 ## web app logins 
 @auth.route('/register', methods=['GET','POST'])
 def register_web():
-    
-    
-    # username = request.json.get('username')
-    # password = request.json.get('password')
-    # first_name=request.json.get('first_name')
-    # last_name = request.json.get('last_name')
-    # if not username or not password:
-    #     return jsonify({'message': 'Username and password are required.'}), 400
-    # if User.query.filter_by(username=username).first():
-    #     return jsonify({'message': 'Username already taken.'}), 400
-    # user = User(username=username, password=password,first_name=first_name,last_name=last_name)
-    # db.session.add(user)
-    # db.session.commit()
-    # return jsonify({'message': 'User created.'})
 
     create_account_form = CreateAccountForm(request.form)
     if 'register' in request.form:
@@ -124,53 +114,47 @@ def register_web():
     else:
         return render_template('accounts/register.html', form=create_account_form)
 
+
 @auth.route('/login', methods=['GET','POST'])
 def login_web():
-    # username = request.json.get('username')
-    # password = request.json.get('password')
-    # user = User.query.filter_by(username=username).first()
-    # if user and user.password == password:
-    #     login_user(user)
-    #     print(current_user.id)
-    #     return jsonify({'message': f'Logged in as {username}.'})
-    # else:
-    #     return jsonify({'message': 'Invalid credentials.'}), 401
-
     login_form=LoginForm(request.form)
     if request.method == 'POST':
-
-        
         if 'login' in request.form:
             username = request.form.get('username')
             password = request.form.get('password')
             user = User.query.filter_by(username=username).first()
             if user and user.password == password:
                 login_user(user,remember=True)
-                print(current_user.id)
-                print(f'authent: {current_user.is_authenticated}')
+                # create API sesh and authenticate it for future calls
+                
+                # sesh.post(BASE+"/api/login",json={"username":username,
+                #                 "password":password
+                #                 })
+    
             return redirect(url_for('auth.home'))
         else:
             return render_template("accounts/login.html",form=login_form)
 
-            
-        #      response=requests.post(BASE+"/api/login" ,json=
-        #                       {"username":request.form.get('username'),
-        #                        "password":request.form.get('password')
-        #                        })
-        # if response.json()["status"]=='200':
-            # print(f'here: {current_user.id}')
-            # print(f'authent: {current_user.is_authenticated}')
+            #     payload = json.dumps({"username":request.form.get('username'),
+            #                            "password":request.form.get('password')
+            #                 })
 
-     
+            #     headers = {
+            #     'Content-Type': 'application/json',
+            #     'Cookie': 'remember_token=1|8b3414488f03cf6251b8317c8d22ed254da149b528bf0590c03a2779339bd2734d4e7a862a5fe0b9af12804705df31c9c9fb91bcb863001db4eae7eaa49e082b; session=.eJwlzjsOwjAMANC7ZGaIHSd2epnKvwjWlk6Iu1OJCzy9T9nXkeezbO_jykfZX1G20iR4SAoQGyd2DxcIJuMGQjTdQgMIw9mwtorcjWkZZfXJHaBOBl8U2LrqItDZSSuHtMiRIeHYpJI2tUq8SMct4lg5QdG03JHrzOO_gfL9AaQGL4M.ZD7HOw.uY3KIOjeax4NmcRbG6OAefihIRc'
+            #     }
+
+            #     response=requests.post(BASE+"/api/login" , headers=headers, data= payload)
+            #     print(response.json())
+            # if response.json()["status"]=='200':
+            # if response.json()["status"]=='200':
+                # print(f'here: {current_user.id}')
+                # print(f'authent: {current_user.is_authenticated}')
     return render_template("accounts/login.html",form=login_form)
 
 
-    
-
-
-
-# @auth.route('/logout')
-# @login_required
-# def logout_web():
-#     logout_user()
-#     return jsonify({'message': 'Logged out.'})
+@auth.route('/logout', methods=['GET'])
+@login_required
+def logout_web():
+    logout_user()
+    return redirect(url_for('auth.home'))
