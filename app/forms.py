@@ -5,7 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import Email, DataRequired
 
 # login and registration
@@ -45,6 +45,11 @@ class AddCoursesForm(FlaskForm):
     semester = StringField('Semester',
                          id='semester_create',
                          validators=[DataRequired()])
-    status = StringField('Status',
+    status = SelectField('Status',
+                         choices=[-1,0,1],
                          id='status_create',
-                         validators=[DataRequired()])
+                         validators=[DataRequired()],
+                         coerce=str)
+    # status = StringField('Status',
+    #                      id='status_create',
+    #                      validators=[DataRequired()])

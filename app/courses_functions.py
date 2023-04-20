@@ -47,9 +47,4 @@ def getCourses():
         .add_columns(User_Courses.status,Course.course_name,Course.semester).all()
     return jsonify({'courses': [{'id': course.course_name, 'semester': course.semester, 'status':course.status} for course in courses]})
 
-def getAvailibility(courseid):
-     course_aval= User_Courses.query.filter_by(user_id=current_user.id,course_id=courseid)
-     aval=course_aval.status
-
-     return aval
      
