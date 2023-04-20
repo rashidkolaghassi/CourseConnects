@@ -61,18 +61,20 @@
                         <th scope="col">#</th>
                         <th scope="col">Course Name</th>
                         <th scope="col">Semester</th>
+                        <th scope="col">Availibility</th>
                 </tr>
             </thead>
             <tbody>
                 {% for i in range(courses['courses']|length) %}
                 <tr>
-                    <th scope="row">{{i}}</th>
+                    <th scope="row">{{i+1}}</th>
                     <td>
                         <div class="d-flex align-items-center">
                             {{courses['courses'][i]['id'] }}<span class="badge badge-primary ml-2"> </span>
                         </div>
                     </td>
                     <td>{{courses['courses'][i]['semester']}}</td>
+                    <td>{{courses['courses'][i]['status']}}</td>
                 </tr>
             </tbody>
             {% endfor %}

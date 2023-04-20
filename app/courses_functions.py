@@ -41,6 +41,15 @@ def deleteCourses(course_names,semesters_):
                         'status':'200'})
 
 def getCourses():
-    courses = Course.query.join(User_Courses).filter_by(user_id=current_user.id).all()
-    return jsonify({'courses': [{'id': course.course_name, 'semester': course.semester} for course in courses]})
+    # courses = Course.query.join(User_Courses).filter_by(user_id=current_user.id).all()
+    # courses = User_Courses.query.filter_by(user_id=current_user.id).join(Course).all()
+    courses=Course.query.join(User_Courses).filter(User_Courses.user_id==current_user.id)\
+        .add_columns(User_Courses.status,Course.course_name,Course.semester).all()
+    return jsonify({'courses': [{'id': course.course_name, 'semester': course.semester, 'status':course.status} for course in courses]})
+
+def getAvailibility(courseid):
+     course_aval= User_Courses.query.filter_by(user_id=current_user.id,course_id=courseid)
+     aval=course_aval.status
+
+     return aval
      
