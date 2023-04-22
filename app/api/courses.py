@@ -1,5 +1,5 @@
-from .models import User, Course, User_Courses, db
-from .forms import AddCoursesForm
+from ..models import User, Course, User_Courses, db
+from ..forms import AddCoursesForm
 
 # Third-party libraries
 from flask import Flask, redirect, request, url_for,Blueprint,jsonify,render_template
@@ -8,7 +8,7 @@ from flask_login import UserMixin, current_user, login_user, logout_user, login_
 from sqlalchemy.orm import load_only
 import requests
 
-from .courses_functions import addCourses, getCourses, deleteCourses
+from ..functions.courses_functions import addCourses, getCourses, deleteCourses
 
 
 # IP address of APP change as needed

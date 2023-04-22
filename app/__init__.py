@@ -21,14 +21,17 @@ def create_app():
 
 
     from .auth import auth
-    from .courses import courses
-    from .courses_web import courses_web
-    from .misc_web import misc_web
+    from .api.courses import courses
+    from .web.courses_web import courses_web
+    from .web.misc_web import misc_web
+    from .web.friends_web import Friends_web
+    
     
     app.register_blueprint(auth,url_prefix='/')
     app.register_blueprint(courses,url_prefix='/')
     app.register_blueprint(courses_web,url_prefix='/')
     app.register_blueprint(misc_web,url_prefix='/')
+    app.register_blueprint(Friends_web,url_prefix='/')
     
     @login_manager.user_loader
     def user_loader(user_id): 

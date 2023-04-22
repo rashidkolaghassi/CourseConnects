@@ -1,5 +1,5 @@
-from .models import User, Course, User_Courses, db
-from .forms import AddCoursesForm
+from ..models import User, Course, User_Courses, db
+from ..forms import AddCoursesForm
 
 # Third-party libraries
 from flask import Flask, redirect, url_for,Blueprint,jsonify,render_template, request
@@ -14,7 +14,7 @@ courses_web = Blueprint('courses_web',__name__)
 BASE = "http://192.168.1.6:8000/"
 #from .auth import sesh
 
-from .courses_functions import addCourses, getCourses, deleteCourses
+from ..functions.courses_functions import addCourses, getCourses, deleteCourses
 
 @courses_web.route('/Course',methods=['GET'])
 @login_required

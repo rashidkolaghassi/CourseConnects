@@ -1,4 +1,4 @@
-from .models import User, Course, User_Courses, db
+from ..models import User, Course, User_Courses, db
 from flask_login import current_user
 from flask import jsonify
 

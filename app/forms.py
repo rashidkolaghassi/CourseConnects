@@ -50,6 +50,12 @@ class AddCoursesForm(FlaskForm):
                          id='status_create',
                          validators=[DataRequired()],
                          coerce=str)
+
+
+    class FindFriendsForm(FlaskForm):
+        course_name = StringField('Course Name',
+                        id='coursename_create',
+                        validators=[DataRequired()])
     # status = StringField('Status',
     #                      id='status_create',
     #                      validators=[DataRequired()])
