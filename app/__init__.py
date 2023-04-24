@@ -25,6 +25,7 @@ def create_app():
     from .web.courses_web import courses_web
     from .web.misc_web import misc_web
     from .web.friends_web import Friends_web
+    from .api.friends import friends
     
     
     app.register_blueprint(auth,url_prefix='/')
@@ -32,6 +33,7 @@ def create_app():
     app.register_blueprint(courses_web,url_prefix='/')
     app.register_blueprint(misc_web,url_prefix='/')
     app.register_blueprint(Friends_web,url_prefix='/')
+    app.register_blueprint(friends, url_prefix='/')
     
     @login_manager.user_loader
     def user_loader(user_id): 

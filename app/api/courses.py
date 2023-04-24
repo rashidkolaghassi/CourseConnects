@@ -45,23 +45,6 @@ def course():
       
     
 
-@courses.route('/api/findclassmates',methods=['GET'])
-@login_required
-def find_classmates():
-    course_names= request.json.get('course_name')
-    semester_=request.json.get('semesters')
-    classmates_={}
-    for e in range(len(course_names)):
-        course= Course.query.filter_by(course_name=course_names[e],semester=semester_[e]).first()
-        course_id=course.course_id
-        users= User.query.join(User_Courses).filter(User_Courses.course_id == course_id, User.id != current_user.id).with_entities(User.first_name, User.last_name,User_Courses.status).all()
-        classmates_[course_names[e]]=[f'{user.first_name} {user.last_name} {user.status}' for user in users]
 
-    return jsonify(classmates_)
-    
-
-# @courses.route('/api/addfriends',methods=['GET'])
-# @login_required
-# def addfriends():
 
 

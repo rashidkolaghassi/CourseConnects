@@ -16,7 +16,8 @@ def addCourses(course_names,semesters_,status_):
             courseCheck = Course.query.filter_by(course_name=course_names[e],semester=semesters_[e]).first()
 
         
-        course_=User_Courses(user_id=current_user.id,course_id=courseCheck.course_id, status = status_[e] )
+        print(status_)
+        course_=User_Courses(user_id=current_user.id,course_id=courseCheck.course_id, status = status_ )
         db.session.add(course_)
         db.session.commit()
         

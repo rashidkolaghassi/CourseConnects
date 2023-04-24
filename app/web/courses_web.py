@@ -54,13 +54,13 @@ def addCourse():
 
 
 
-@courses_web.route('/deleteCourse',methods=['GET','POST'])
+@courses_web.route('/deleteCourse',methods=['POST'])
 @login_required
 def deleteCourse():
-    delete_courses_form = AddCoursesForm(request.form)
+    # delete_courses_form = AddCoursesForm(request.form)
 
-    if request.method == 'GET':
-            return render_template("scheduling/deleteCourses.html", form = delete_courses_form)
+    # if request.method == 'GET':
+    #         return render_template("scheduling/deleteCourses.html", form = delete_courses_form)
 
     if request.method == "POST":
             if 'delete' in request.form:
@@ -72,7 +72,7 @@ def deleteCourse():
                 print(response.json)
 
                 if response.json['status'] == '200':
-                    return render_template('scheduling/deleteCourses.html',msg='Successfully Deleted Course',form=delete_courses_form)
+                    return redirect(url_for('courses_web.course_web'))
                 else:
                     return render_template("scheduling/deleteCourses.html", msg='Error in inputted course info. Try again', form = delete_courses_form)
                  

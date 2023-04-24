@@ -1,5 +1,5 @@
 from ..models import User, Course, User_Courses, db
-from ..forms import AddCoursesForm
+from ..forms import AddCoursesForm, FindFriendsForm
 
 # Third-party libraries
 from flask import Flask, redirect, url_for,Blueprint,jsonify,render_template, request
@@ -9,20 +9,67 @@ import requests
 
 
 Friends_web = Blueprint('friends_web',__name__)
-all_too=3
 
 # IP address of APP change as needed
 BASE = "http://192.168.1.6:8000/"
 #from .auth import sesh
-
+msg=None
 from ..functions.courses_functions import addCourses, getCourses, deleteCourses
+from ..functions.friends_functions import findClassmates,addFriend, getFriends, deleteFriend
 
-@Friends_web.route('/Friends',methods=['GET'])
+@Friends_web.route('/Friends',methods=['GET','POST'])
 @login_required
 def friends_web():
-    if request.method == 'GET':
-        courses=getCourses().json
-        return render_template("friends/home.html",courses=courses)
+    global msg
+    if request.method== 'GET':
+        find_friends_form = FindFriendsForm(request.form)
+        local_msg=msg
+        msg=None
+       
+        return render_template("friends/home.html",form=find_friends_form,msg=local_msg)
+
+    if request.method == 'POST':
+        find_friends_form = FindFriendsForm(request.form)
+        if 'find' in request.form:
+            course_names = request.form.get('course_name')
+            semesters_ = request.form.get('semester')
+
+            response=findClassmates(course_names,semesters_)
+            print(response)
+            return render_template("friends/home.html",form=find_friends_form,friends=response)
+
+            
+
+@Friends_web.route('/addfriend',methods=['GET','POST'])
+@login_required
+def addFriends():
+    global msg
+    if 'add' in request.form:
+        find_friends_form = FindFriendsForm(request.form)
+        username=request.form.get('username')
+        response=addFriend(username)
+        msg=response['message']
+        return redirect(url_for('friends_web.friends_web'))
+    
+
+@Friends_web.route('/myFriends',methods=['GET','POST'])
+@login_required
+def getmyFriends():
+    if request.method == "GET":
+        friends=getFriends().json
+        return render_template("friends/myfriends.html",friends=friends)
+    
+    if request.method =="POST":
+       
+        username = request.form.get("username")
+        response = deleteFriend(username).json
+        friends=getFriends().json
+        return render_template("friends/myfriends.html",friends=friends,msg=response['message'])
+
+
+        
+
+    
         
 
 

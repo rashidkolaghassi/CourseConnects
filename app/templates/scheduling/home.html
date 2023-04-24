@@ -40,11 +40,11 @@
     </div>
 
 
-    <div class="d-flex justify-content-center align-items-center mb-4">
+    <!-- <div class="d-flex justify-content-center align-items-center mb-4">
         <a href="{{ url_for('courses_web.deleteCourse') }}" class="btn btn-tertiary mb-3 mt-2 me-2 me-md-3 animate-up-2"><span
                 class="fas fa-th-large me-2"></span> <span class="d-none d-md-inline">Delete Classes
                 </span> <span class="d-md-none">Components</span></a>
-    </div>
+    </div> -->
 
     <!-- End of Buttons Section-->
 
@@ -62,10 +62,13 @@
                         <th scope="col">Course Name</th>
                         <th scope="col">Semester</th>
                         <th scope="col">Availibility</th>
+                        <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for i in range(courses['courses']|length) %}
+                <!-- {{courses['courses'][i]['status']| string}}-->
+                    
                 <tr>
                     <th scope="row">{{i+1}}</th>
                     <td>
@@ -74,8 +77,33 @@
                         </div>
                     </td>
                     <td>{{courses['courses'][i]['semester']}}</td>
-                    <td>{{courses['courses'][i]['status']}}</td>
-                </tr>
+
+                    {% if courses['courses'][i]['status'] == 1 %}
+                    <td>
+                        Public <span class="badge badge-primary ml-2"> </span>
+                    </td>
+                    {% elif courses['courses'][i]['status'] == 0 %}
+                    <td>
+                        Friends Only <span class="badge badge-primary ml-2"> </span>
+                    </td>
+                    {% else %}
+                    <td>
+                        Private <span class="badge badge-primary ml-2"> </span>
+                    </td>
+
+
+                    {% endif %} 
+
+                    <td>
+                        <form method="post" action="/deleteCourse">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="course_name" value="{{courses['courses'][i]['id'] }}">
+                            <input type="hidden" name="semester" value="{{courses['courses'][i]['semester']}}">
+                            <button class="btn btn-danger" name='delete' type="submit">Delete</button>
+                        </form>
+                    </td>
+                            
+                    </tr>
             </tbody>
             {% endfor %}
         </table>

@@ -2,7 +2,6 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
@@ -11,14 +10,13 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(100))
     user_courses = db.relationship('User_Courses')
     email=db.Column(db.String(50), unique=True)
-    # friends= db.relationship('Friends')
+    friends= db.relationship('Friends')
 
 class Course(db.Model):
     course_id = db.Column(db.Integer,primary_key=True)
     course_name=db.Column(db.String(50))
     semester = db.Column(db.String(50)) 
     user_courses=db.relationship('User_Courses')
-
 
 class User_Courses(db.Model):
      
@@ -33,10 +31,17 @@ class User_Courses(db.Model):
         ),
     )
 
-
 class Friends(db.Model):
     friendship_id=db.Column(db.Integer,primary_key=True)
     user_id= db.Column(db.Integer,db.ForeignKey('user.id'))
-    friend_id= db.Column(db.Integer,db.ForeignKey('user.id'))
+    friend_id= db.Column(db.Integer)
+
+class Study_Session(db.Model):
+    study_id=db.Column(db.Integer,primary_key=True)
+    date=db.Column()
+    location=db.Column(db.String(50))
+    participants=db.Column(db.ARRAY(db.Integer),nullable=False )
+    description=db.Column(db.String(50))
+
 
 

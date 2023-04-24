@@ -34,10 +34,10 @@
                                                 <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">View Schedule</a>
                                             </li>
                                             <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">Add Courses</a>
+                                                <a class="megamenu-link" href="{{ url_for('courses_web.addCourse') }}">Add Courses</a>
                                             </li>
                                             <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">Remove Courses</a>
+                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">Delete Courses</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -46,10 +46,10 @@
                                         <h6 class="d-block mb-3 text-primary">Classmates</h6>
                                         <ul class="list-style-none mb-4">
                                             <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">View Classmates</a>
+                                                <a class="megamenu-link" href="{{ url_for('friends_web.friends_web') }}">View My Friends</a>
                                             </li>
                                             <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">Add Classmaters</a>
+                                                <a class="megamenu-link" href="{{ url_for('friends_web.friends_web') }}">Find Friends</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -87,30 +87,6 @@
                                 </div>
                             </div>
                         </li>
-
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
-                                The Team
-                                <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
-                                <div class="col-auto px-0">
-                                    <div class="list-group list-group-flush">
-                                        <a href="https://github.com/rashidkolaghassi/CourseConnects" target="_blank" 
-                                           class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
-                                           <span class="icon icon-sm"><span class="fas fa-microphone-alt"></span></span>
-                                            <div class="ms-4">
-                                                <span class="d-block font-small fw-bold mb-0">About Us</span>
-                                                <span class="small">Any Questions? Ask us!</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-
                     </ul>
                 </div>
                 <div class="d-flex align-items-center">

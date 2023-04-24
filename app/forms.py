@@ -46,15 +46,18 @@ class AddCoursesForm(FlaskForm):
                          id='semester_create',
                          validators=[DataRequired()])
     status = SelectField('Status',
-                         choices=[-1,0,1],
+                         choices=[(-1,'Private'),(0,'Friends Only'),(1,'Public')],
                          id='status_create',
-                         validators=[DataRequired()],
-                         coerce=str)
+                         validators=[DataRequired()]
+                         )
 
 
-    class FindFriendsForm(FlaskForm):
-        course_name = StringField('Course Name',
-                        id='coursename_create',
+class FindFriendsForm(FlaskForm):
+    course_name = StringField('Course Name',
+                    id='coursename_create',
+                    validators=[DataRequired()])
+    semester = StringField('Semester',
+                        id='semester_create',
                         validators=[DataRequired()])
     # status = StringField('Status',
     #                      id='status_create',
