@@ -1,6 +1,8 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from sqlalchemy import Date,ARRAY,Time
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,11 +38,14 @@ class Friends(db.Model):
     user_id= db.Column(db.Integer,db.ForeignKey('user.id'))
     friend_id= db.Column(db.Integer)
 
-class Study_Session(db.Model):
+class Study_Sessions(db.Model):
     study_id=db.Column(db.Integer,primary_key=True)
-    date=db.Column()
+    course_id=db.Column(db.Integer,db.ForeignKey('course.course_id'))
+    owner=db.Column(db.Integer)
+    date=db.Column(db.Date,nullable=False)
+    time=db.Column(db.Time,nullable=False)
     location=db.Column(db.String(50))
-    participants=db.Column(db.ARRAY(db.Integer),nullable=False )
+    participants=db.Column(db.String(255),nullable=False )
     description=db.Column(db.String(50))
 
 
