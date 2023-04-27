@@ -1,4 +1,4 @@
-from ..models import User, Course, User_Courses, db, Study_Sessions,Friends
+from ..models import User, Course, User_Courses, db, Study,Friends,Study_Participants
 from ..forms import AddCoursesForm
 
 # Third-party libraries
@@ -15,7 +15,7 @@ import requests
 
 from ..functions.courses_functions import addCourses, getCourses, deleteCourses
 from ..functions.friends_functions import findClassmates,addFriend, getFriends
-from ..functions.study_functions import find_study_sessions,create_study_session,delete_study_session
+from ..functions.study_functions import find_study_sessions,create_study_session,delete_study_session,join_study_session
 
 study = Blueprint('StudySessions',__name__)
 
@@ -33,13 +33,31 @@ def studysession():
         course_name=request.json.get('course_name')
         semester=request.json.get('semester')
         date=request.json.get('date')
-        time=request.json.get('time')
+        start_time=request.json.get('start_time')
+        end_time=request.json.get('end_time')
         location=request.json.get('location')
         description=request.json.get('description')
 
         date=datetime.datetime.strptime(date,'%m/%d/%Y').date()
-        time=datetime.datetime.strptime(time,'%I:%M %p').time()
+        start_time=datetime.datetime.strptime(start_time,'%I:%M %p').time()
+        end_time=datetime.datetime.strptime(end_time,'%I:%M %p').time()
 
 
-        response=create_study_session(course_name=course_name,semester=semester,date=date,time=time,location=location,description=description)
+        response=create_study_session(course_name=course_name,semester=semester,date=date,start_time=start_time,end_time=end_time,location=location,description=description)
+        return response 
+
+
+
+
+
+
+@login_required
+@study.route('/api/joinstudysession',methods=['POST'])
+def joinstudysession():
+
+    
+    if request.method=='POST':
+        study_id=request.json.get('study_id')
+
+        response=join_study_session(study_id)
         return response 

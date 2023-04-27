@@ -38,15 +38,29 @@ class Friends(db.Model):
     user_id= db.Column(db.Integer,db.ForeignKey('user.id'))
     friend_id= db.Column(db.Integer)
 
-class Study_Sessions(db.Model):
+
+class Study(db.Model):
     study_id=db.Column(db.Integer,primary_key=True)
     course_id=db.Column(db.Integer,db.ForeignKey('course.course_id'))
     owner=db.Column(db.Integer)
     date=db.Column(db.Date,nullable=False)
-    time=db.Column(db.Time,nullable=False)
+    start_time=db.Column(db.Time,nullable=False)
+    end_time=db.Column(db.Time,nullable=False)
     location=db.Column(db.String(50))
-    participants=db.Column(db.String(255),nullable=False )
+    participants = db.relationship('Study_Participants')
     description=db.Column(db.String(50))
+
+class Study_Participants(db.Model):
+    
+    user_id=db.Column(db.Integer,db.ForeignKey('user.id'))
+    study_id=db.Column(db.Integer,db.ForeignKey('study.study_id'))
+    
+    __table_args__ = (
+    db.PrimaryKeyConstraint(
+        user_id, study_id,
+        ),  
+    )
+
 
 
 
