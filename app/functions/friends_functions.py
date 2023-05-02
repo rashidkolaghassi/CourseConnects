@@ -5,22 +5,6 @@ from sqlalchemy import and_
 
 
 def findClassmates(course_names, semester_):
-    # classmates_={}
-    # for e in range(len(course_names)):
-    #     course= Course.query.filter_by(course_name=course_names[e],semester=semester_[e]).first()
-    #     course_id=course.course_id
-    #     users= User.query.join(User_Courses).filter(User_Courses.course_id == course_id, User.id != current_user.id).with_entities(User.first_name, User.last_name,User_Courses.status).all()
-    #     classmates_[course_names[e]]=[f'{user.first_name} {user.last_name} {user.status}' for user in users]
-
-    # return classmates_
-
-    # classmates_={}
-    # course= Course.query.filter_by(course_name=course_names,semester=semester_).first()
-    # course_id=course.course_id
-    # users= User.query.join(User_Courses).filter(User_Courses.course_id == course_id, User.id != current_user.id,User_Courses.status != -1).with_entities(User.first_name, User.last_name,User.username,User.email,User_Courses.status).all()
-    # classmates_[course_names]=[{'first_name': user.first_name,'last_name':user.last_name,'username':user.username,'email':user.email} for user in users]
-
-
     classmates_={}
     course= Course.query.filter_by(course_name=course_names,semester=semester_).first()
     if course is None:

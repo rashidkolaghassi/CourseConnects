@@ -54,9 +54,23 @@ def join_study_session(study_id):
         db.session.add(study_participant)
         db.session.commit()
     
-    return jsonify({'message':'Sucessfully joined study Session',
-                    'status':'200'})
+    return {'message':'Sucessfully joined study Session',
+                    'status':'200'}
 
+
+
+def my_study_sessions():
+    sessions=Study.query.join(Study_Participants).\
+            filter(Study_Participants.user_id == current_user.id).all()
+    
+    return jsonify ({'sessions': [{
+                                   'course_name': Course.query.filter_by(course_id=session.course_id).first().course_name, 
+                                   'semester': Course.query.filter_by(course_id=session.course_id).first().semester,
+                                   'start_time':session.start_time.strftime('%I:%M %p'),
+                                   'end_time': session.end_time.strftime('%I:%M %p'),
+                                   'location':session.location,
+                                   'description':session.description
+                                   } for session in sessions]})
 
 def delete_study_session():
     return 

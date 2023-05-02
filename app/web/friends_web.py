@@ -45,7 +45,6 @@ def friends_web():
 def addFriends():
     global msg
     if 'add' in request.form:
-        find_friends_form = FindFriendsForm(request.form)
         username=request.form.get('username')
         response=addFriend(username)
         msg=response['message']

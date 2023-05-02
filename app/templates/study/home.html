@@ -36,8 +36,15 @@
 
 
 <div class="d-flex justify-content-center align-items-center mb-4">
-    <a href="{{ url_for('friends_web.getmyFriends') }}" class="btn btn-tertiary mb-3 mt-2 me-2 me-md-3 animate-up-2"><span
-            class="fas fa-th-large me-2"></span> <span class="d-none d-md-inline">Study Sessions
+    <a href="{{ url_for('study_web.mysessions_web') }}" class="btn btn-tertiary mb-3 mt-2 me-2 me-md-3 animate-up-2"><span
+            class="fas fa-th-large me-2"></span> <span class="d-none d-md-inline"> My Study Sessions
+            </span> <span class="d-md-none">Components</span></a>
+</div>
+
+
+<div class="d-flex justify-content-center align-items-center mb-4">
+    <a href="{{ url_for('study_web.createsession_web') }}" class="btn btn-tertiary mb-3 mt-2 me-2 me-md-3 animate-up-2"><span
+            class="fas fa-th-large me-2"></span> <span class="d-none d-md-inline"> Create Study Session
             </span> <span class="d-md-none">Components</span></a>
 </div>
 
@@ -56,7 +63,7 @@
                     <div class="signin-inner my-4 my-lg-0 bg-white shadow-soft border rounded border-gray-300 p-4 p-lg-5 w-100 fmxw-500">
                         <div class="text-center text-md-center mb-4 mt-md-0">
                             <h1 class="mb-0 h3">
-                                <a target="_blank">Search for Course</a> 
+                                <a target="_blank">Search for Study Sessions</a> 
                             </h1>
                             <br />
                             <span class="font-weight-normal">
@@ -86,47 +93,6 @@
             </form>
 
 
-
-        {%if study_sessions%}
-        <!--Start of Table Section-->
-        <div class="section section-md">
-            <!-- <div class="container"> -->
-                <!-- <div class="row justify-content-center"> -->
-                    <!-- <div class="col-lg-12"> -->
-                        <div class="mb-3">
-                            <span class="h5">Study Sessions:</span>
-                        </div>
-                        <div class="mb-3">
-                            <table class="table" style="width: 120%;">
-                            <th scope="col">#</th>
-                            <th scope="col">Course Name</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Start Time</th>
-                            <th scope="col">End Time</th>
-                            <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for study in study_sessions['study_sessions'] %}
-                    <tr>
-                        <th scope="row">{{loop.index}}</th>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                {{study['course_name'] }}<span class="badge badge-primary ml-2"> </span>
-                            </div>
-                        </td>
-                        <td>{{study['date']}}</td>
-                        <td>{{study['start_time']}}</td>
-                        <td>{{study['end_time']}}</td>
-
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-
-            {% endif %}   
-
-     
     </span>
                             </div>
                     </div>
@@ -134,6 +100,59 @@
             </div>
         </div>
 </section>
+
+
+<section class="section section-lg pt-0">
+    {%if study_sessions%}
+    <!--Start of Table Section-->
+    <div class="section section-md">
+        <!-- <div class="container"> -->
+            <!-- <div class="row justify-content-center"> -->
+                <!-- <div class="col-lg-12"> -->
+                    <div class="mb-3">
+                        <span class="h5">Study Sessions:</span>
+                    </div>
+                    <div class="mb-3">
+                        <table class="table" style="width: 120%;">
+                        <th scope="col">#</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Semester</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for study in study_sessions['study_sessions'] %}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            {{study['course_name'] }}<span class="badge badge-primary ml-2"> </span>
+                        </div>
+                    </td>
+                    <td>{{study['semester']}}</td>
+                    <td>{{study['date']}}</td>
+                    <td>{{study['start_time']}}</td>
+                    <td>{{study['end_time']}}</td>
+                    {% if userid not in study['participants']%}
+                        <td>
+                            <form method="post" action="/joinsession">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="study_id" value="{{study['study_id']}}">
+                                <button class="button-10" style="font-size : 10px; width: 90%; height: 40px;" name='join' type="submit">Join</button>
+                            </form>
+                        </td>
+                        {% endif %}
+
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+    {% endif %}   
+    </section>
 
 {% endblock content %}
 

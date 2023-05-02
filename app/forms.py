@@ -5,7 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SelectField
+from wtforms import StringField, PasswordField, SelectField,DateField,TimeField
 from wtforms.validators import Email, DataRequired
 
 # login and registration
@@ -62,3 +62,23 @@ class FindFriendsForm(FlaskForm):
     # status = StringField('Status',
     #                      id='status_create',
     #                      validators=[DataRequired()])
+
+class AddStudyForm(FlaskForm):
+    course_name = StringField('Course Name',
+                    id='coursename_create',
+                    validators=[DataRequired()])
+    semester = StringField('Semester',
+                        id='semester_create',
+                        validators=[DataRequired()])
+    date = DateField('Date',format='%m/%d/%Y')
+    start_time= TimeField('Start Time',format='%I:%M %p')
+    end_time= TimeField('End Time',format='%I:%M %p')
+    location = StringField('Location',
+                        id='location_create',
+                        validators=[DataRequired()])
+    description = StringField('Description',
+                        id='location_create',
+                        validators=[DataRequired()])
+    
+
+    

@@ -15,7 +15,7 @@ import requests
 
 from ..functions.courses_functions import addCourses, getCourses, deleteCourses
 from ..functions.friends_functions import findClassmates,addFriend, getFriends
-from ..functions.study_functions import find_study_sessions,create_study_session,delete_study_session,join_study_session
+from ..functions.study_functions import find_study_sessions,create_study_session,delete_study_session,join_study_session,my_study_sessions
 
 study = Blueprint('StudySessions',__name__)
 
@@ -55,9 +55,14 @@ def studysession():
 @study.route('/api/joinstudysession',methods=['POST'])
 def joinstudysession():
 
-    
     if request.method=='POST':
         study_id=request.json.get('study_id')
 
         response=join_study_session(study_id)
-        return response 
+        return jsonify(response)
+    
+@login_required
+@study.route('/api/mysessions',methods=['GET'])
+def mystudysession():
+    response=my_study_sessions()
+    return response
