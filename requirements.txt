@@ -10,4 +10,5 @@ Werkzeug==2.0.3
 email-validator
 gunicorn==20.1.0
 Werkzeug==2.0.3
+flask-swagger-ui==4.11.1
 
