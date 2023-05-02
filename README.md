@@ -4,7 +4,11 @@ CourseConnects is a web application and API designed to help college students co
 
 ## Getting Started
 
-To get started with CourseConnects, you will need to create an account on our website. Once you have created an account, you can begin adding courses to your schedule. To add a course, simply click the "Add Course" button on your dashboard and enter the course information.
+To get started with CourseConnects, you will need to create an account on our website at the following Link:
+
+https://courseconnects.onrender.com
+
+Once you have created an account, you can begin adding courses to your schedule. To add a course, simply click the "Add Course" button on your dashboard and enter the course information.
 
 ## Features
 
