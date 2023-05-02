@@ -36,9 +36,6 @@
                                             <li class="mb-2 megamenu-item">
                                                 <a class="megamenu-link" href="{{ url_for('courses_web.addCourse') }}">Add Courses</a>
                                             </li>
-                                            <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">Delete Courses</a>
-                                            </li>
                                         </ul>
                                     </div>
                                             
@@ -46,7 +43,7 @@
                                         <h6 class="d-block mb-3 text-primary">Classmates</h6>
                                         <ul class="list-style-none mb-4">
                                             <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('friends_web.friends_web') }}">View My Friends</a>
+                                                <a class="megamenu-link" href="{{ url_for('friends_web.getmyFriends') }}">View Friends</a>
                                             </li>
                                             <li class="mb-2 megamenu-item">
                                                 <a class="megamenu-link" href="{{ url_for('friends_web.friends_web') }}">Find Friends</a>
@@ -58,10 +55,13 @@
                                         <h6 class="d-block mb-3 text-primary">Study Sessions</h6>
                                         <ul class="list-style-none mb-4">
                                             <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">View My Study Sessions</a>
+                                                <a class="megamenu-link" href="{{ url_for('study_web.mysessions_web') }}">View Study Sessions</a>
                                             </li>
                                             <li class="mb-2 megamenu-item">
-                                                <a class="megamenu-link" href="{{ url_for('courses_web.course_web') }}">Add Study Session</a>
+                                                <a class="megamenu-link" href="{{ url_for('study_web.studysession_web') }}">Find and Join Study Session</a>
+                                            </li>
+                                            <li class="mb-2 megamenu-item">
+                                                <a class="megamenu-link" href="{{ url_for('study_web.createsession_web') }}">Create Study Session</a>
                                             </li>
                                         </ul>
                                     </div>

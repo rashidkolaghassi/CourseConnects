@@ -5,6 +5,7 @@ from flask_login import UserMixin, current_user, login_user, logout_user, login_
 import requests
 from .forms import LoginForm, CreateAccountForm
 import json
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import (
     LoginManager,
@@ -43,7 +44,7 @@ def register():
         return jsonify({'message': 'Username and password are required.'}), 400
     if User.query.filter_by(username=username).first():
         return jsonify({'message': 'Username already taken.'}), 400
-    user = User(username=username, password=password,first_name=first_name,last_name=last_name, email = email)
+    user = User(username=username, password=generate_password_hash(password, method='sha256'),first_name=first_name,last_name=last_name, email = email)
     db.session.add(user)
     db.session.commit()
     return jsonify({'message': 'User created.'})
@@ -54,7 +55,7 @@ def login():
     username = request.json.get('username')
     password = request.json.get('password')
     user = User.query.filter_by(username=username).first()
-    if user and user.password == password:
+    if user and check_password_hash(user.password, password):
         login_user(user,remember=True)
         print(current_user.id)
         print(f'authent: {current_user.is_authenticated}')
@@ -102,7 +103,7 @@ def register_web():
                                    form=create_account_form)
 
         # else we can create the user
-        user = User(username=username,first_name=first_name,last_name=last_name,password=password,email=email)
+        user = User(username=username,first_name=first_name,last_name=last_name,password=generate_password_hash(password, method='sha256'),email=email)
         db.session.add(user)
         db.session.commit()
 
@@ -123,33 +124,11 @@ def login_web():
             username = request.form.get('username')
             password = request.form.get('password')
             user = User.query.filter_by(username=username).first()
-            if user and user.password == password:
+            if user and check_password_hash(user.password, password):
                 login_user(user,remember=True)
-                # create API sesh and authenticate it for future calls
-                
-                # sesh.post(BASE+"/api/login",json={"username":username,
-                #                 "password":password
-                #                 })
-    
             return redirect(url_for('auth.home'))
         else:
             return render_template("accounts/login.html",form=login_form)
-
-            #     payload = json.dumps({"username":request.form.get('username'),
-            #                            "password":request.form.get('password')
-            #                 })
-
-            #     headers = {
-            #     'Content-Type': 'application/json',
-            #     'Cookie': 'remember_token=1|8b3414488f03cf6251b8317c8d22ed254da149b528bf0590c03a2779339bd2734d4e7a862a5fe0b9af12804705df31c9c9fb91bcb863001db4eae7eaa49e082b; session=.eJwlzjsOwjAMANC7ZGaIHSd2epnKvwjWlk6Iu1OJCzy9T9nXkeezbO_jykfZX1G20iR4SAoQGyd2DxcIJuMGQjTdQgMIw9mwtorcjWkZZfXJHaBOBl8U2LrqItDZSSuHtMiRIeHYpJI2tUq8SMct4lg5QdG03JHrzOO_gfL9AaQGL4M.ZD7HOw.uY3KIOjeax4NmcRbG6OAefihIRc'
-            #     }
-
-            #     response=requests.post(BASE+"/api/login" , headers=headers, data= payload)
-            #     print(response.json())
-            # if response.json()["status"]=='200':
-            # if response.json()["status"]=='200':
-                # print(f'here: {current_user.id}')
-                # print(f'authent: {current_user.is_authenticated}')
     return render_template("accounts/login.html",form=login_form)
 
 
