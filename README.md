@@ -10,6 +10,11 @@ https://courseconnects.onrender.com
 
 Once you have created an account, you can begin adding courses to your schedule. To add a course, simply click the "Add Course" button on your dashboard and enter the course information.
 
+## Demo Video
+
+https://user-images.githubusercontent.com/22237564/235829968-fdbe79c4-9278-46d1-8165-a7ce114c5f78.mp4
+
+
 ## Features
 
 ### Add Courses to Your Schedule
@@ -27,11 +32,6 @@ You can create study sessions for a course and invite other students to join. Th
 ## API
 
 The CourseConnects API allows you to integrate our platform into your own applications. You can use the API to add courses to your schedule, set your status in a course, search for classmates, and create study sessions.
-
-## Demo Video
-
-
-https://user-images.githubusercontent.com/22237564/235829968-fdbe79c4-9278-46d1-8165-a7ce114c5f78.mp4
 
 
 
