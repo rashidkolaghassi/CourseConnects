@@ -3,13 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, current_user, login_user, logout_user, login_required, LoginManager
 from flask_httpauth import HTTPBasicAuth
 from flask_swagger_ui import get_swaggerui_blueprint
+import os
 
 
 db=SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL').replace("postgres://", "postgresql://", 1)
     app.config['SECRET_KEY'] = 'your_secret_key'
 
     ### swagger specific ###
