@@ -10,7 +10,14 @@ db=SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL').replace("postgres://", "postgresql://", 1)
+
+    if os.getenv('DATABASE_URL'):
+        print('Using render DB')
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL').replace("postgres://", "postgresql://", 1)
+    else:
+         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+
+
     app.config['SECRET_KEY'] = 'your_secret_key'
 
     ### swagger specific ###
