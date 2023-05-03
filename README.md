@@ -30,7 +30,11 @@ The CourseConnects API allows you to integrate our platform into your own applic
 
 ## Demo Video
 
-Uploading courseconnectsGIT.mp4…
+
+https://user-images.githubusercontent.com/22237564/235829968-fdbe79c4-9278-46d1-8165-a7ce114c5f78.mp4
+
+
+
 
 
 ## Support
