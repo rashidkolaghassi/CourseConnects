@@ -30,7 +30,7 @@ The CourseConnects API allows you to integrate our platform into your own applic
 
 ## Support
 
-If you have any questions or issues with CourseConnects, please contact our support team at support@courseconnects.com. We are here to help you get the most out of our platform.
+If you have any questions or issues with CourseConnects, please contact our support team at rbrk@bu.edu or lnamara@bu.edu. We are here to help you get the most out of our platform.
 
 
 
