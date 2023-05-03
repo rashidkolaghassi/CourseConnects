@@ -29,7 +29,8 @@ You can create study sessions for a course and invite other students to join. Th
 The CourseConnects API allows you to integrate our platform into your own applications. You can use the API to add courses to your schedule, set your status in a course, search for classmates, and create study sessions.
 
 ## Demo Video
-[courseConnects.mp4.zip](https://github.com/rashidkolaghassi/CourseConnects/files/11379084/courseConnects.mp4.zip)
+ <video src="https://github.com/rashidkolaghassi/CourseConnects/blob/main/courseConnects.mp4" controls="controls" style="max-width: 730px;">
+</video>
 
 ## Support
 
