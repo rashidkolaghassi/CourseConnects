@@ -17,16 +17,16 @@ https://user-images.githubusercontent.com/22237564/235829968-fdbe79c4-9278-46d1-
 
 ## Features
 
-### Add Courses to Your Schedule
+#### Add Courses to Your Schedule
 With CourseConnects, you can add courses to your schedule and organize your coursework in one place. You can add the course name, professor, location, and meeting times to your schedule.
 
-### Set Your Status
+#### Set Your Status
 You can set your status in a course to public, private, or friends-only. This allows you to control who can see your course information and connect with you.
 
-### Search for Classmates
+#### Search for Classmates
 You can search for classmates in a course and add them to your friends list. This allows you to connect with other students in your class and work on coursework together.
 
-### Create Study Sessions
+#### Create Study Sessions
 You can create study sessions for a course and invite other students to join. This allows you to collaborate with other students and work on coursework together in a group setting.
 
 ## API
