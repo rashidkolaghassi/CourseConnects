@@ -8,6 +8,7 @@ To get started with CourseConnects, you will need to create an account on our we
 
 https://courseconnects.onrender.com
 
+Please note that the webpage can take a few minutes to load as we are hosting it on a free hosting service with very limited resources. 
 Once you have created an account, you can begin adding courses to your schedule. To add a course, simply click the "Add Course" button on your dashboard and enter the course information.
 
 ## Demo Video
