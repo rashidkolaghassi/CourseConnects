@@ -32,7 +32,7 @@ You can create study sessions for a course and invite other students to join. Th
 
 ## API
 
-The CourseConnects API allows you to integrate our platform into your own applications. You can use the API to add courses to your schedule, set your status in a course, search for classmates, and create study sessions.
+The CourseConnects API allows you to integrate our platform into your own applications. You can use the API to add courses to your schedule, set your status in a course, search for classmates, and create study sessions. For API documentation go to https://courseconnects.onrender.com/swagger.
 
 
 
