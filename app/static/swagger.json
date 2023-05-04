@@ -2,15 +2,13 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "description": "sean",
+      "description": "Layth and Rashid",
       "version": "1.0.0",
-      "title": "Seans-Python3-Flask-Rest-Boilerplate",
+      "title": "CourseConnects",
+      "host":	"courseconnects.onrender.com",
+      "basePath":"/v2",
       "contact": {
         "email": "seanwasere@gmail.com"
-      },
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
       }
     },
     "servers": [
@@ -22,22 +20,35 @@
       {
         "name": "Authentication",
         "description": "How to authenticate"
+      },
+      {
+        "name": "Courses",
+        "description": "How to handle your courses"
+      },
+      {
+        "name": "Friends",
+        "description": "How to search, get, and add friends"
+      },
+      {
+        "name": "Study Sessions",
+        "description": "How to find, create, and join study sessions"
       }
+
     ],
     "paths": {
-      "/request": {
+      "/api/register": {
         "post": {
           "tags": [
-            "Book Request"
+            "Authentication"
           ],
-          "summary": "Create a new book request system",
+          "summary": "register an account",
           "requestBody": {
-            "description": "Book Request Post Object",
+            "description": "Register Request Post Object",
             "required": true,
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/bookRequestPostBody"
+                  "$ref": "#/components/schemas/RegisterRequestPostBody"
                 }
               }
             }
@@ -47,10 +58,7 @@
           ],
           "responses": {
             "201": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/components/schemas/id"
-              }
+              "description": "OK"
             },
             "400": {
               "description": "Failed. Bad post data."
@@ -58,32 +66,25 @@
           }
         }
       },
-      "/request/{id}": {
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of the cat that we want to match",
-            "type": "string"
-          }
-        ],
-        "get": {
+      
+      "/api/login": {
+       
+        "post": {
           "tags": [
-            "Book Request"
+            "Authentication"
           ],
-          "summary": "Get book request with given ID",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "description": "Book Request id",
-              "schema": {
-                "$ref": "#/components/schemas/id"
+          "summary": "Login with your account",
+          "requestBody": {
+            "description": "Login Request Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginRequestPostBody"
+                }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "OK",
@@ -97,135 +98,464 @@
             "404": {
               "description": "Failed. Book request not found."
             }
-          }
-        },
-        "put": {
-          "summary": "edit a book request by ID",
-          "tags": [
-            "Book Request"
-          ],
-          "parameters": [
+        }
+    }
+},
+
+            "/api/Course": 
             {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "description": "Book Request id",
-              "schema": {
-                "$ref": "#/components/schemas/id"
+                "get": {
+                  "tags": [
+                    "Courses"
+                  ],
+                  "summary": "Get the courses you are registered for",
+                  
+                  "produces": [
+                    "application/json"
+                  ],
+                  "responses": {
+                    "201": {
+                      "description": "OK"
+                    },
+                    "400": {
+                      "description": "Failed. Bad post data."
+                    }
+                  }
+                },
+                "post": {
+                    "tags": [
+                      "Courses"
+                    ],
+                    "summary": "add your course",
+                    
+                    "produces": [
+                      "application/json"
+                    ],
+                    "responses": {
+                      "201": {
+                        "description": "OK"
+                      },
+                      "400": {
+                        "description": "Failed. Bad post data."
+                      }
+                    },
+
+                    "requestBody": {
+                        "description": "Course Request Post Object",
+                        "required": true,
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/CourseRequestPostBody"
+                            }
+                          }
+                        }
+                      }
+                  },
+                  "delete": {
+                    "tags": [
+                      "Courses"
+                    ],
+                    "summary": "Delete your course",
+                    
+                    "produces": [
+                      "application/json"
+                    ],
+                    "responses": {
+                      "201": {
+                        "description": "OK"
+                      },
+                      "400": {
+                        "description": "Failed. Bad post data."
+                      }
+                    },
+
+                    "requestBody": {
+                        "description": "Course Request Post Object",
+                        "required": true,
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/CourseRequestDeleteBody"
+                            }
+                          }
+                        }
+                      }
+                  }
+
+
+
+              },
+              "/api/findfreinds": 
+            {
+                "get": {
+                  "tags": [
+                    "Friends"
+                  ],
+                  "summary": "find classmates who are taking a same class with you",
+                  
+                  "produces": [
+                    "application/json"
+                  ],
+                  "responses": {
+                    "201": {
+                      "description": "OK"
+                    },
+                    "400": {
+                      "description": "Failed. Bad post data."
+                    }
+                  },
+                  "requestBody": {
+                    "description": "Find Friends Request Get Object",
+                    "required": true,
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/FindFriendsRequestGetBody"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+
+              "/api/addfriend": 
+              {
+                  "post": {
+                    "tags": [
+                      "Friends"
+                    ],
+                    "summary": "add a friend",
+                    
+                    "produces": [
+                      "application/json"
+                    ],
+                    "responses": {
+                      "201": {
+                        "description": "OK"
+                      },
+                      "400": {
+                        "description": "Failed. Bad post data."
+                      }
+                    },
+                    "requestBody": {
+                      "description": "Add Friend Request Post Object",
+                      "required": true,
+                      "content": {
+                        "application/json": {
+                          "schema": {
+                            "$ref": "#/components/schemas/AddFriendRequestPostBody"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+
+                "/api/getfriends": 
+                {
+                    "get": {
+                      "tags": [
+                        "Friends"
+                      ],
+                      "summary": "get your friends",
+                      
+                      "produces": [
+                        "application/json"
+                      ],
+                      "responses": {
+                        "201": {
+                          "description": "OK"
+                        },
+                        "400": {
+                          "description": "Failed. Bad post data."
+                        }
+                      }
+                      
+                    }
+                  },
+
+      "/api/studysessions": 
+      {
+          "get": {
+            "tags": [
+              "Study Sessions"
+            ],
+            "summary": "find study sessions for a course",
+            
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "201": {
+                "description": "OK"
+              },
+              "400": {
+                "description": "Failed. Bad post data."
               }
-            }
-          ],
-          "requestBody": {
-            "description": "Book Request Object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/bookRequest"
+            },
+            "requestBody": {
+              "description": "Get Study Sessions Request Get Object",
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FindFriendsRequestGetBody"
+                  }
                 }
               }
             }
           },
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/components/schemas/bookRequest"
+
+
+          "post": {
+            "tags": [
+              "Study Sessions"
+            ],
+            "summary": "create a study sessions for a course",
+            
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "201": {
+                "description": "OK"
+              },
+              "400": {
+                "description": "Failed. Bad post data."
               }
             },
-            "400": {
-              "description": "Failed. Bad post data."
+            "requestBody": {
+              "description": "Add Study Sessions Request Post Object",
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddStudySessionRequestPostBody"
+                  }
+                }
+              }
             }
           }
         },
-        "delete": {
-          "summary": "Delete Book Request by ID",
-          "tags": [
-            "Book Request"
-          ],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "description": "Book Request Id",
-              "schema": {
-                "$ref": "#/components/schemas/id"
+        "/api/joinstudysession": 
+        {
+            "post": {
+              "tags": [
+                "Study Sessions"
+              ],
+              "summary": "join a study session",
+              
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "201": {
+                  "description": "OK"
+                },
+                "400": {
+                  "description": "Failed. Bad post data."
+                }
+              },
+              "requestBody": {
+                "description": "Join Study Session Request Post Object",
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/FindFriendsRequestGetBody"
+                    }
+                  }
+                }
               }
             }
-          ],
-          "responses": {
-            "204": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/components/schemas/id"
+          },
+
+          "/api/mysessions": 
+          {
+              "get": {
+                "tags": [
+                  "Study Sessions"
+                ],
+                "summary": "get your study sessions",
+                
+                "produces": [
+                  "application/json"
+                ],
+                "responses": {
+                  "201": {
+                    "description": "OK"
+                  },
+                  "400": {
+                    "description": "Failed. Bad post data."
+                  }
+                }
               }
-            },
-            "400": {
-              "description": "Failed. Misunderstood Request."
-            },
-            "404": {
-              "description": "Failed. Book Request not found."
             }
-          }
-        }
-      }
-    },
+
+
+
+          },
+        
     "components": {
       "schemas": {
-        "id": {
-          "properties": {
-            "uuid": {
-              "type": "string"
-            }
-          }
-        },
-        "bookRequestPostBody": {
+        "RegisterRequestPostBody": {
           "type": "object",
           "properties": {
-            "title": {
+            "first_name": {
+                "type": "string",
+                "format": "string"
+              },
+              "last_name": {
+                "type": "string",
+                "format": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+            "username": {
               "type": "string",
               "format": "string"
             },
-            "email": {
-              "type": "string",
-              "format": "email"
-            }
-          }
-        },
-        "bookRequest": {
-          "type": "object",
-          "properties": {
-            "title": {
+            "password": {
               "type": "string",
               "format": "string"
-            },
-            "email": {
-              "type": "string",
-              "format": "email"
-            },
-            "timestamp": {
-              "type": "string",
-              "format": "number"
             }
           }
         },
-        "bookRequests": {
-          "type": "object",
-          "properties": {
-            "bookRequest": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/components/schemas/bookRequest"
+        "LoginRequestPostBody": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "format": "string"
+              },
+              "password": {
+                "type": "string",
+                "format": "string"
               }
             }
-          }
+          },
+        "CourseRequestPostBody": {
+          "type": "object",
+          "properties": {
+            "course_names": {
+              "type": "array",
+              "items":{
+              "type":"string",
+              "example": "Course Name"
+              }
+             
+            },
+            "semesters":{
+                "type": "array",
+              "items":{
+              "type":"string",
+              "example": "Semester"
+              }
+            },
+            "status":{
+                "type": "integer"
+              }
+            }
+          },
+          "CourseRequestDeleteBody": {
+            "type": "object",
+            "properties": {
+              "course_names": {
+                "type": "array",
+                "items":{
+                "type":"string",
+                "example": "Course Name"
+                }
+               
+              },
+              "semesters":{
+                  "type": "array",
+                "items":{
+                "type":"string",
+                "example": "Semester"
+                }
+              }
+              }
+            },
+            "FindFriendsRequestGetBody": {
+              "type": "object",
+              "properties": {
+                "course_name": {
+                  "type": "string",
+                  "format": "string"
+                },
+                "semester": {
+                  "type": "string",
+                  "format": "string"
+                }
+              }
+            },
+
+            "AddFriendRequestPostBody": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "format": "string"
+                }
+              }
+            },
+
+
+            "AddStudySessionRequestPostBody": {
+              "type": "object",
+              "properties": {
+                "course_name": {
+                  "type": "string",
+                  "format": "string"
+                },
+                "semester": {
+                  "type": "string",
+                  "format": "string"
+                },
+                "date":{
+                  "type": "string",
+                  "format": "date",
+                  "example": "05/27/2023"
+                },
+                "start_time":{
+                  "type": "string",
+                  "format": "time",
+                  "example": "9:00 AM"
+                },
+                "end_time":{
+                  "type": "string",
+                  "format": "time",
+                  "example": "12:00 PM"
+                },
+                "location":{
+                  "type": "string",
+                  "format": "string"
+                },
+                "description":{
+                  "type": "string",
+                  "format": "string"
+                }
+
+              }
+            },
+
+            "JoinStudySessionRequestPostBody": {
+              "type": "object",
+              "properties": {
+                "study_id": {
+                  "type": "integer"
+                }
+              }
+            }
+
+
         }
       }
     }
-  }
+  
 
   

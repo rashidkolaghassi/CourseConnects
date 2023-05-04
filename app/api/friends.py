@@ -32,7 +32,7 @@ def add_friend():
     response=addFriend(username)
     return response
 
-@friends.route('/api/getfriend',methods=['GET'])
+@friends.route('/api/getfriends',methods=['GET'])
 @login_required
 def get_friend():
     response=getFriends()

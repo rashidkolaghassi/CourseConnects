@@ -18,7 +18,7 @@ def findClassmates(course_names, semester_):
             User_Courses.course_id == course_id,
             User.id != current_user.id,
             User_Courses.status >= 0
-        )).with_entities(User.first_name, User.last_name, User.username, User.email, User_Courses.status,User.id).all()
+        )).with_entities(User.first_name , User.last_name, User.username, User.email, User_Courses.status,User.id).all()
 
     classmates_['users'] = []
     for user in users:
